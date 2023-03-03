@@ -9,12 +9,7 @@ public class ControlAfficherMarche {
 		this.village = village;
 	}
 
-	public String donnerInfosMarche() {
-		StringBuilder chaine = new StringBuilder();
-		String[] infosMarche = village.donnerEtatMarche();
-		for(int i=0; i<infosMarche.length; i++) {
-			chaine.append(infosMarche[i]);
-		}
-		return chaine.toString();
+	public String[] donnerInfosMarche() {
+		return village.donnerEtatMarche();
 	}
 }
