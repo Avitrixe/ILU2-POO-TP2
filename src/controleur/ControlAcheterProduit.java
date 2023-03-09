@@ -16,20 +16,41 @@ public class ControlAcheterProduit {
 		this.controlTrouverEtalVendeur = controlTrouverEtalVendeur;
 	}
 
-	public void acheterProduit(String nomAcheteur) {
-
+	public void acheterProduit(String nomVendeur, int quantiteAcheter) {
+		controlTrouverEtalVendeur.trouverEtalVendeur(nomVendeur).acheterProduit(quantiteAcheter);
 	}
 	
 	public boolean verifierIdentite(String nomAcheteur) {
 		return controlVerifierIdentite.verifierIdentite(nomAcheteur);
 	}
 	
-	public String trouverEtalProduit(String nomProduit) {
-		StringBuilder chaine = new StringBuilder();
-		Gaulois[] vendeur = village.rechercherVendeursProduit(nomProduit);
-		for(int i=0; i<vendeur.length; i++) {
-			chaine.append(i+1 + " " + vendeur[i].getNom() + "\n");
+	public Gaulois[] trouverVendeurProduit(String nomProduit) {
+		Gaulois[] vendeurs;
+		vendeurs = village.rechercherVendeursProduit(nomProduit);
+		return vendeurs;
+	}
+	
+	public boolean verifierProduitDansMarche(String nomProduit) {
+		Gaulois[] vendeurs;
+		boolean produitDansMarche;
+		vendeurs = village.rechercherVendeursProduit(nomProduit);
+		if(vendeurs==null) produitDansMarche = false;
+		else produitDansMarche = true;
+		return produitDansMarche;
+	}
+	
+	public boolean verifierMarcheNonVide() {
+		return village.donnerNbEtal() == 0;
+	}
+	
+	public boolean verifierQuantiteProduit(int quantite, Gaulois vendeur) {
+		boolean bonneQuantite;
+		if((quantite > village.rechercherEtal(vendeur).getQuantite()) || (quantite < 0)) {
+			bonneQuantite = false;
 		}
-		return chaine.toString();
+		else {
+			bonneQuantite = true;
+		}
+		return bonneQuantite;
 	}
 }
